@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkido — Math Practice for Kids | Coming Soon</title>
+    <meta name="description" content="Kalkido is an ad-free math practice app for elementary students (K–5). Adaptive difficulty, daily challenges, and a parent dashboard. Coming soon to iOS and Android.">
+    <meta name="keywords" content="math app for kids, kids math practice, elementary math app, ad free math app, math games for kids, kindergarten math, kalkido">
+    <meta property="og:title" content="Kalkido — Math Practice for Kids">
+    <meta property="og:description" content="Ad-free math practice that kids love and parents trust. Coming soon to iOS and Android.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kalkido.app">
+    <link rel="canonical" href="https://kalkido.app">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #3B82F6;
+            --blue-dark: #1E40AF;
+            --blue-light: #DBEAFE;
+            --green: #22C55E;
+            --orange: #FB923C;
+            --pink: #F472B6;
+            --purple: #A78BFA;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-400: #94A3B8;
+            --gray-600: #475569;
+            --gray-900: #0F172A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Floating math symbols background */
+        .bg-symbols {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-symbols span {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            animation: floatUp linear infinite;
+            color: var(--blue);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 0; transform: translateY(100vh) rotate(0deg); }
+            10% { opacity: 0.08; }
+            90% { opacity: 0.08; }
+            100% { opacity: 0; transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Logo area */
+        .logo-area {
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.25);
+        }
+
+        .logo-icon span {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -2px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Main card */
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .coming-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--blue-light), #EDE9FE);
+            color: var(--blue-dark);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .coming-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .card h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .card p {
+            color: var(--gray-600);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features pills */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 2px solid var(--gray-100);
+            background: var(--white);
+            color: var(--gray-900);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Email form */
+        .email-form {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .email-form input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            border: 2px solid var(--gray-100);
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .email-form input::placeholder {
+            color: var(--gray-400);
+            font-weight: 600;
+        }
+
+        .email-form input:focus {
+            border-color: var(--blue);
+        }
+
+        .email-form button {
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .email-form button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .email-form button:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            margin-top: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Success message */
+        .success-msg {
+            display: none;
+            padding: 1rem;
+            background: #F0FDF4;
+            border-radius: 14px;
+            color: #166534;
+            font-weight: 700;
+            font-size: 1rem;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .footer a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile */
+        @media (max-width: 520px) {
+            h1 { font-size: 2.25rem; }
+            .card { padding: 2rem 1.25rem; }
+            .card h2 { font-size: 1.4rem; }
+            .email-form { flex-direction: column; }
+            .email-form button { width: 100%; padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating math symbols -->
+    <div class="bg-symbols" id="bgSymbols"></div>
+
+    <div class="container">
+        <div class="logo-area">
+            <div class="logo-icon"><span>K</span></div>
+            <h1>Kalkido</h1>
+            <p class="tagline">Math practice kids love. Zero ads.</p>
+        </div>
+
+        <div class="card">
+            <div class="coming-badge">
+                <span class="dot"></span>
+                Coming Soon
+            </div>
+
+            <h2>Build math confidence,<br>one problem at a time.</h2>
+            <p>
+                Kalkido is a clean, ad-free math practice app for elementary students (K–5). 
+                Adaptive difficulty, daily challenges, and a parent dashboard that shows real progress. 
+                Coming soon to iPad, iPhone & Android.
+            </p>
+
+            <div class="features">
+                <span class="pill">🚫 Zero Ads</span>
+                <span class="pill">🧮 Grades K–5</span>
+                <span class="pill">📊 Parent Dashboard</span>
+                <span class="pill">🎯 Adaptive Difficulty</span>
+                <span class="pill">🏆 Daily Challenges</span>
+                <span class="pill">🌍 16+ Languages</span>
+            </div>
+
+            <form class="email-form" id="emailForm">
+                <input type="email" placeholder="Your email" required aria-label="Email address">
+                <button type="submit">Notify Me</button>
+            </form>
+            <div class="success-msg" id="successMsg">
+                🎉 You're on the list! We'll let you know when Kalkido launches.
+            </div>
+            <p class="form-note">Be the first to know when we launch. No spam, ever.</p>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Kalkido · <a href="mailto:hello@kalkido.app">hello@kalkido.app</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Floating math symbols
+        const symbols = ['+', '−', '×', '÷', '=', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        const container = document.getElementById('bgSymbols');
+
+        function createSymbol() {
+            const span = document.createElement('span');
+            span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+            span.style.animationDuration = (12 + Math.random() * 18) + 's';
+            span.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(span);
+            setTimeout(() => span.remove(), 35000);
+        }
+
+        // Create initial batch
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createSymbol, i * 400);
+        }
+        // Keep creating
+        setInterval(createSymbol, 2500);
+
+        // Email form
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // TODO: Connect to email service (Mailchimp, ConvertKit, etc.)
+            this.style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
