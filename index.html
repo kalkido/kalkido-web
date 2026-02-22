@@ -428,6 +428,8 @@
         // ——— i18n: 17 languages, locale detection, language selector ———
         const SUPPORTED = ['en','es','pt','fr','de','ja','ko','zh','it','nl','tr','ru','pl','hi','th','vi','ro'];
         const LOCALE_MAP = { en:['en','en-US','en-GB','en-AU','en-CA'], es:['es','es-MX','es-ES'], pt:['pt','pt-BR'], fr:['fr','fr-FR','fr-CA'], de:['de','de-DE'], ja:['ja','ja-JP'], ko:['ko','ko-KR'], zh:['zh','zh-CN','zh-Hans'], it:['it','it-IT'], nl:['nl','nl-NL'], tr:['tr','tr-TR'], ru:['ru','ru-RU'], pl:['pl','pl-PL'], hi:['hi','hi-IN'], th:['th','th-TH'], vi:['vi','vi-VN'], ro:['ro','ro-RO'] };
+        // Country code (from IP) → language when browser didn't match (e.g. user in Romania with browser in English)
+        const COUNTRY_TO_LANG = { RO:'ro', US:'en', GB:'en', AU:'en', CA:'en', MX:'es', ES:'es', BR:'pt', FR:'fr', DE:'de', JP:'ja', KR:'ko', CN:'zh', IT:'it', NL:'nl', TR:'tr', RU:'ru', PL:'pl', IN:'hi', TH:'th', VN:'vi' };
 
         const I18N = {
             en: { tagline:'Math practice kids love. Zero ads.', comingSoon:'Coming Soon', cardTitle:'Build math confidence,<br>one problem at a time.', cardDesc:'Kalkido is a clean, ad-free math practice app for elementary students (K–5). Adaptive difficulty, daily challenges, and a parent dashboard that shows real progress. Coming soon to iPad, iPhone & Android.', pillZeroAds:'🚫 Zero Ads', pillGrades:'🧮 Grades K–5', pillDashboard:'📊 Parent Dashboard', pillAdaptive:'🎯 Adaptive Difficulty', pillChallenges:'🏆 Daily Challenges', pillLanguages:'🌍 16+ Languages', emailPlaceholder:'Your email', notifyBtn:'Notify Me', sendingBtn:'Sending…', successMsg:"🎉 You're on the list! We'll let you know when Kalkido launches.", formNote:'Be the first to know when we launch. No spam, ever.', footerCopy:'© 2026 Kalkido', errorServer:'Server error. Please try again or email us at hello@kalkido.app.', errorNetwork:'Network error. Please check your connection and try again, or email us at hello@kalkido.app.', errorLocal:'Request blocked (opening from file). Run a local server to test, e.g. in terminal: npx serve .' },
@@ -454,19 +456,22 @@
         function detectLocale() {
             const saved = localStorage.getItem('kalkido-lang');
             if (saved && SUPPORTED.includes(saved)) return saved;
-            const preferred = navigator.language || navigator.userLanguage || '';
-            const list = navigator.languages || [preferred];
-            for (const locale of list) {
-                const code = locale.split('-')[0].toLowerCase();
+            const preferred = (navigator.language || navigator.userLanguage || '').trim();
+            const list = Array.isArray(navigator.languages) ? navigator.languages : (preferred ? [preferred] : []);
+            const toCheck = list.length ? list : (preferred ? [preferred] : []);
+            for (const locale of toCheck) {
+                const normalized = locale.trim().toLowerCase();
+                const code = normalized.split('-')[0];
                 for (const [lang, codes] of Object.entries(LOCALE_MAP)) {
-                    if (codes.some(c => c.toLowerCase() === locale || c.toLowerCase() === code)) return lang;
+                    if (codes.some(c => c.toLowerCase() === normalized || c.toLowerCase() === code)) return lang;
                 }
             }
             return 'en';
         }
-        function applyLang(lang) {
+        function applyLang(lang, opts) {
+            const skipStorage = opts && opts.skipStorage;
             currentLang = SUPPORTED.includes(lang) ? lang : 'en';
-            localStorage.setItem('kalkido-lang', currentLang);
+            if (!skipStorage) localStorage.setItem('kalkido-lang', currentLang);
             document.documentElement.lang = currentLang === 'zh' ? 'zh-Hans' : currentLang;
             document.getElementById('langSelect').value = currentLang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -479,7 +484,16 @@
             if (btn) btn.textContent = t('notifyBtn');
         }
         document.getElementById('langSelect').addEventListener('change', function() { applyLang(this.value); });
-        applyLang(detectLocale());
+        const detected = detectLocale();
+        applyLang(detected);
+        // If we fell back to English and user didn't choose a language, use location (e.g. Romania → Romanian)
+        if (detected === 'en' && !localStorage.getItem('kalkido-lang')) {
+            fetch('https://ip-api.com/json/?fields=countryCode').then(r => r.json()).then(data => {
+                const country = data && data.countryCode;
+                const lang = country && COUNTRY_TO_LANG[country];
+                if (lang && lang !== 'en') applyLang(lang, { skipStorage: true });
+            }).catch(() => {});
+        }
 
         // Floating math symbols
         const symbols = ['+', '−', '×', '÷', '=', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
