@@ -487,13 +487,17 @@
         const detected = detectLocale();
         applyLang(detected);
         // If we fell back to English and user didn't choose a language, use location (e.g. Romania → Romanian)
-        if (detected === 'en' && !localStorage.getItem('kalkido-lang')) {
+        const savedLang = localStorage.getItem('kalkido-lang');
+        if (detected === 'en' && !savedLang) {
+            console.log('[Kalkido locale] Browser=English, no saved choice → fetching country to suggest language...');
             fetch('https://ip-api.com/json/?fields=countryCode').then(r => r.json()).then(data => {
                 const country = data && data.countryCode;
                 const lang = country && COUNTRY_TO_LANG[country];
                 console.log('[Kalkido locale] Detected country:', country || '(none)', '→ language:', lang || '(no match, keeping English)');
                 if (lang && lang !== 'en') applyLang(lang, { skipStorage: true });
             }).catch(err => { console.log('[Kalkido locale] Geo lookup failed:', err.message); });
+        } else {
+            console.log('[Kalkido locale] Using language:', detected, savedLang ? '(saved)' : '(from browser)');
         }
 
         // Floating math symbols
