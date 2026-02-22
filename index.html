@@ -349,9 +349,10 @@
                 <span class="pill">🌍 16+ Languages</span>
             </div>
 
-            <form class="email-form" id="emailForm">
-                <input type="email" placeholder="Your email" required aria-label="Email address">
-                <button type="submit">Notify Me</button>
+            <!-- Replace YOUR_FORM_ID with your Formspree form ID (get it at formspree.io; set notification email to andrei.rebenciuc@gmail.com) -->
+            <form class="email-form" id="emailForm" action="https://formspree.io/f/xqedyvnj" method="POST">
+                <input type="email" name="email" placeholder="Your email" required aria-label="Email address">
+                <button type="submit" id="submitBtn">Notify Me</button>
             </form>
             <div class="success-msg" id="successMsg">
                 🎉 You're on the list! We'll let you know when Kalkido launches.
@@ -360,7 +361,7 @@
         </div>
 
         <div class="footer">
-            <p>© 2025 Kalkido · <a href="mailto:hello@kalkido.app">hello@kalkido.app</a></p>
+            <p>© 2026 Kalkido · <a href="mailto:hello@kalkido.app">hello@kalkido.app</a></p>
         </div>
     </div>
 
@@ -387,12 +388,44 @@
         // Keep creating
         setInterval(createSymbol, 2500);
 
-        // Email form
-        document.getElementById('emailForm').addEventListener('submit', function(e) {
+        // Email form — sends to andrei.rebenciuc@gmail.com via Formspree (no DB)
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            // TODO: Connect to email service (Mailchimp, ConvertKit, etc.)
-            this.style.display = 'none';
-            document.getElementById('successMsg').style.display = 'block';
+            const form = this;
+            const btn = document.getElementById('submitBtn');
+            const email = form.querySelector('input[name="email"]').value;
+
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: new URLSearchParams({ email }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json'
+                    }
+                });
+                const data = res.ok ? null : await res.json().catch(() => ({}));
+                if (res.ok) {
+                    form.style.display = 'none';
+                    document.getElementById('successMsg').style.display = 'block';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Notify Me';
+                    const msg = (data && data.error) ? data.error : 'Server error. Please try again or email us at hello@kalkido.app.';
+                    alert(msg);
+                }
+            } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'Notify Me';
+                const isLocal = window.location.protocol === 'file:';
+                const msg = isLocal
+                    ? 'Request blocked (opening from file). Run a local server to test, e.g. in terminal: npx serve .'
+                    : 'Network error. Please check your connection and try again, or email us at hello@kalkido.app.';
+                alert(msg);
+            }
         });
     </script>
 </body>
