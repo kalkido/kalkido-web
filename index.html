@@ -491,8 +491,9 @@
             fetch('https://ip-api.com/json/?fields=countryCode').then(r => r.json()).then(data => {
                 const country = data && data.countryCode;
                 const lang = country && COUNTRY_TO_LANG[country];
+                console.log('[Kalkido locale] Detected country:', country || '(none)', '→ language:', lang || '(no match, keeping English)');
                 if (lang && lang !== 'en') applyLang(lang, { skipStorage: true });
-            }).catch(() => {});
+            }).catch(err => { console.log('[Kalkido locale] Geo lookup failed:', err.message); });
         }
 
         // Floating math symbols
