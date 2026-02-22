@@ -484,19 +484,27 @@
             if (btn) btn.textContent = t('notifyBtn');
         }
         document.getElementById('langSelect').addEventListener('change', function() { applyLang(this.value); });
-        const detected = detectLocale();
-        applyLang(detected);
-        // If we fell back to English and user didn't choose a language, use location (e.g. Romania → Romanian)
         const savedLang = localStorage.getItem('kalkido-lang');
+        const detected = detectLocale();
+        // Don't persist English until after geo lookup when there's no saved choice (otherwise we'd save 'en' and never run geo)
         if (detected === 'en' && !savedLang) {
-            console.log('[Kalkido locale] Browser=English, no saved choice → fetching country to suggest language...');
+            applyLang('en', { skipStorage: true });
+            console.log('[Kalkido locale] Browser=English, no saved choice → fetching country...');
             fetch('https://ip-api.com/json/?fields=countryCode').then(r => r.json()).then(data => {
                 const country = data && data.countryCode;
                 const lang = country && COUNTRY_TO_LANG[country];
                 console.log('[Kalkido locale] Detected country:', country || '(none)', '→ language:', lang || '(no match, keeping English)');
-                if (lang && lang !== 'en') applyLang(lang, { skipStorage: true });
-            }).catch(err => { console.log('[Kalkido locale] Geo lookup failed:', err.message); });
+                if (lang && lang !== 'en') {
+                    applyLang(lang, { skipStorage: true });
+                } else {
+                    applyLang('en'); // persist English after geo said no match
+                }
+            }).catch(err => {
+                console.log('[Kalkido locale] Geo lookup failed:', err.message, '→ keeping English');
+                applyLang('en');
+            });
         } else {
+            applyLang(detected);
             console.log('[Kalkido locale] Using language:', detected, savedLang ? '(saved)' : '(from browser)');
         }
 
