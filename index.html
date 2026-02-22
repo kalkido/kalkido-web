@@ -490,8 +490,8 @@
         if (detected === 'en' && !savedLang) {
             applyLang('en', { skipStorage: true });
             console.log('[Kalkido locale] Browser=English, no saved choice → fetching country...');
-            fetch('https://ip-api.com/json/?fields=countryCode').then(r => r.json()).then(data => {
-                const country = data && data.countryCode;
+            fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
+                const country = data && (data.country_code || data.countryCode);
                 const lang = country && COUNTRY_TO_LANG[country];
                 console.log('[Kalkido locale] Detected country:', country || '(none)', '→ language:', lang || '(no match, keeping English)');
                 if (lang && lang !== 'en') {
