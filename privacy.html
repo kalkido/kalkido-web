@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Kalkido</title>
+    <meta name="description" content="Privacy Policy for Kalkido, the ad-free math practice app for elementary students. COPPA and GDPR compliant.">
+    <link rel="canonical" href="https://kalkido.app/privacy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #3B82F6;
+            --blue-dark: #1E40AF;
+            --blue-light: #DBEAFE;
+            --purple: #A78BFA;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-400: #94A3B8;
+            --gray-600: #475569;
+            --gray-900: #0F172A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-logo span {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .header-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .header-back {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .header-back:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--blue-light), #EDE9FE);
+            color: var(--blue-dark);
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .content-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .intro {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin: 2rem 0 0.75rem;
+        }
+
+        h2:first-of-type { margin-top: 0; }
+
+        h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 1.25rem 0 0.5rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 0.75rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 1rem;
+        }
+
+        ul li {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            padding: 0.25rem 0 0.25rem 1.5rem;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            left: 0.25rem;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            background: var(--blue);
+            border-radius: 50%;
+        }
+
+        a { color: var(--blue); }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .footer a {
+            color: var(--gray-400);
+            text-decoration: none;
+            margin: 0 0.75rem;
+        }
+
+        .footer a:hover { color: var(--blue); }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .content-card { padding: 1.5rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <a href="https://kalkido.app">
+            <div class="header-logo"><span>K</span></div>
+            <span class="header-name">Kalkido</span>
+        </a>
+        <a href="https://kalkido.app" class="header-back">← Back to Home</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-badge">🔒 Privacy</div>
+    <h1>Privacy Policy</h1>
+    <p class="last-updated">Last updated: March 2026</p>
+
+    <div class="content-card">
+        <p class="intro">Kalkido ("the App") is an educational math practice app designed for children in grades K–5 (ages 5–12). We take children's privacy extremely seriously and comply with the Children's Online Privacy Protection Act (COPPA) and the General Data Protection Regulation (GDPR).</p>
+
+        <h2>1. Information We Collect</h2>
+
+        <h3>a) Information stored locally on your device (never transmitted to our servers)</h3>
+        <ul>
+            <li>Child's first name (entered by parent during setup)</li>
+            <li>Grade level selection</li>
+            <li>Practice session history (problems solved, accuracy, time spent)</li>
+            <li>Achievement progress and streaks</li>
+            <li>App preferences (language, sound settings)</li>
+        </ul>
+
+        <h3>b) Anonymous analytics data (collected via Firebase Analytics)</h3>
+        <ul>
+            <li>App usage patterns (which screens are visited, session duration)</li>
+            <li>Aggregate performance metrics (accuracy rates, difficulty levels)</li>
+            <li>Device type and operating system version</li>
+            <li>App language setting</li>
+            <li>Crash reports (via Firebase Crashlytics)</li>
+        </ul>
+        <p>This data is anonymous and cannot be used to identify any individual child. We do not collect device advertising identifiers (IDFA/AAID).</p>
+
+        <h3>c) Information we DO NOT collect</h3>
+        <ul>
+            <li>Email addresses of children</li>
+            <li>Photos or videos</li>
+            <li>Precise geolocation</li>
+            <li>Contact lists or phone numbers</li>
+            <li>Device advertising identifiers</li>
+            <li>Any information from other apps on the device</li>
+        </ul>
+
+        <h2>2. How We Use Information</h2>
+        <ul>
+            <li><strong>Local data:</strong> Used solely to provide app functionality — tracking progress, maintaining streaks, displaying parent dashboard statistics.</li>
+            <li><strong>Analytics data:</strong> Used to improve the app — understanding which features are popular, identifying bugs, and improving the user experience.</li>
+            <li>We do NOT use any collected data for advertising purposes.</li>
+            <li>We do NOT sell or share personal information with third parties.</li>
+        </ul>
+
+        <h2>3. Third-Party Services</h2>
+
+        <h3>a) Firebase Analytics (Google)</h3>
+        <p>Purpose: Anonymous app usage analytics. Data collected: anonymous usage events, device type, OS version. Child-directed settings enabled (no ad personalization, no IDFA collection). <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Privacy policy</a></p>
+
+        <h3>b) Firebase Crashlytics (Google)</h3>
+        <p>Purpose: Crash reporting to improve app stability. Data collected: crash logs, device state at time of crash. No personal information included in crash reports. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Privacy policy</a></p>
+
+        <h3>c) RevenueCat</h3>
+        <p>Purpose: Subscription management. Data collected: anonymous purchase transactions, subscription status. No child personal data is shared with RevenueCat. <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">Privacy policy</a></p>
+
+        <h3>d) Apple App Store / Google Play Store</h3>
+        <p>Purpose: App distribution and payment processing. Payment data is handled entirely by Apple/Google — we never see or store credit card information.</p>
+
+        <h2>4. COPPA Compliance</h2>
+        <ul>
+            <li>We do not knowingly collect personal information from children under 13 without verifiable parental consent.</li>
+            <li>All child profile data is stored locally on the device.</li>
+            <li>Anonymous analytics cannot identify individual children.</li>
+            <li>We do not serve advertisements of any kind.</li>
+            <li>We do not have social features, chat, or user-generated content.</li>
+            <li>Parents can delete all child data at any time by deleting the app or using the reset function in the parent dashboard.</li>
+            <li>Google Signals and ads personalization are disabled in our analytics.</li>
+        </ul>
+
+        <h2>5. GDPR Compliance (For European Users)</h2>
+        <ul>
+            <li><strong>Legal basis:</strong> Legitimate interest (improving app functionality) and consent (analytics).</li>
+            <li><strong>Data minimization:</strong> We collect only what is necessary for app functionality.</li>
+            <li><strong>Right to deletion:</strong> Delete the app to remove all local data. Contact us to request deletion of any analytics data associated with your device.</li>
+            <li><strong>Data retention:</strong> Anonymous analytics data is retained for a maximum of 2 months.</li>
+            <li><strong>Data location:</strong> Analytics data is processed by Google (Firebase) in accordance with their data processing terms.</li>
+        </ul>
+
+        <h2>6. Parental Controls</h2>
+        <ul>
+            <li>The parent dashboard is protected by a math problem gate to prevent children from accessing parent-only settings.</li>
+            <li>Parents can view their child's practice statistics and manage app settings.</li>
+            <li>Parents can configure daily practice reminders.</li>
+            <li>Parents can delete all app data using the reset function.</li>
+        </ul>
+
+        <h2>7. Data Security</h2>
+        <ul>
+            <li>All child data is stored locally on the device.</li>
+            <li>No personal data is transmitted over the internet.</li>
+            <li>Anonymous analytics data is transmitted securely (HTTPS/TLS).</li>
+        </ul>
+
+        <h2>8. Data Retention</h2>
+        <ul>
+            <li><strong>Local data:</strong> Retained on device until the app is deleted or data is manually reset.</li>
+            <li><strong>Analytics data:</strong> Retained for a maximum of 2 months (configured in Firebase).</li>
+            <li><strong>Crash reports:</strong> Retained for 90 days.</li>
+        </ul>
+
+        <h2>9. Changes to This Policy</h2>
+        <p>We will notify users of significant changes through an in-app notice. Continued use of the App after changes constitutes acceptance. The "Last updated" date at the top reflects the most recent changes.</p>
+
+        <h2>10. Contact Us</h2>
+        <p>For questions about this privacy policy or our data practices, contact us at: <a href="mailto:hello@kalkido.app">hello@kalkido.app</a></p>
+        <p>If you believe we have inadvertently collected information from a child without proper consent, please contact us immediately at <a href="mailto:hello@kalkido.app">hello@kalkido.app</a> and we will promptly delete the information.</p>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2026 Kalkido</p>
+    <p>
+        <a href="https://kalkido.app">Home</a>
+        <a href="https://kalkido.app/terms">Terms & Conditions</a>
+        <a href="https://kalkido.app/privacy">Privacy Policy</a>
+    </p>
+</div>
+
+</body>
+</html>
